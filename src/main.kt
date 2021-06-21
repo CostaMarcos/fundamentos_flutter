@@ -1,10 +1,44 @@
-fun main(){
+fun main() {
     println("Bem vindo ao Bytebank")
-    forLoop(0, 5)
+    var contaVinicius = Conta()
+    var contaMarcos = Conta()
+
+    contaVinicius.deposita(100.0)
+    contaMarcos.deposita(50.0)
+
+    contaVinicius.transfere(25.0, contaMarcos)
+    println("Saldo Vinicius ${contaVinicius.saldo}")
+    println("Saldo Marcos ${contaMarcos.saldo}")
 }
 
+class Conta {
+    var titular = ""
+    var numero = 0
+    var saldo = 0.0
 
-fun infoConta(i: Int){
+    fun deposita(valor: Double) {
+        this.saldo += valor
+    }
+
+    fun saca(valor: Double) {
+        if (this.saldo >= valor) {
+            this.saldo -= valor
+        }
+    }
+
+    fun transfere(valor: Double, destino: Conta): Boolean {
+        if (this.saldo > valor) {
+            this.saldo -= valor
+            destino.saldo += valor
+            return true
+        }
+
+        return false
+    }
+
+}
+
+fun infoConta(i: Int) {
     val titular: String = "Vinicin $i"
     val numeroConta: Int = 1000 + i
     var saldo = 10.0 + i
@@ -15,33 +49,33 @@ fun infoConta(i: Int){
     println()
 }
 
-fun whileLoop(fim: Int){
+fun whileLoop(fim: Int) {
 
     var i = 0
-    while(i < fim){
+    while (i < fim) {
         infoConta(i)
         i++
     }
 }
 
-fun forLoop(init: Int, fim: Int){
+fun forLoop(init: Int, fim: Int) {
 
-    for (i in init..fim){
+    for (i in init..fim) {
         infoConta(i)
     }
 }
 
-fun testaCondicoes(saldo: Double){
+fun testaCondicoes(saldo: Double) {
 
-    if(saldo > 0.0) {
+    if (saldo > 0.0) {
         println("Conta positiva")
-    } else if(saldo == 0.0){
+    } else if (saldo == 0.0) {
         println("Conta neutra")
-    } else{
+    } else {
         println("Conta negativa")
     }
 
-    when{
+    when {
         saldo > 0.0 -> println("Conta positiva")
         saldo == 0.0 -> println("Conta neutra")
         saldo < 0.0 -> println("Conta negativa")
