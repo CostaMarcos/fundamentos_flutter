@@ -1,7 +1,7 @@
 fun main() {
     println("Bem vindo ao Bytebank")
-    var contaVinicius = Conta()
-    var contaMarcos = Conta()
+    var contaVinicius = Conta("Vinicius", 100)
+    var contaMarcos = Conta("Marcos", 101)
 
     contaVinicius.deposita(100.0)
     contaMarcos.deposita(50.0)
@@ -11,13 +11,19 @@ fun main() {
     println("Saldo Marcos ${contaMarcos.saldo}")
 }
 
-class Conta {
-    var titular = ""
-    var numero = 0
+class Conta(var titular: String, var numero: Int) {
     var saldo = 0.0
+        private set
+
+//    constructor(titular: String, numero: Int){
+//        this.titular = titular
+//        this.numero = numero
+//    }
 
     fun deposita(valor: Double) {
-        this.saldo += valor
+        if (valor > 0) {
+            this.saldo += valor
+        }
     }
 
     fun saca(valor: Double) {
@@ -29,13 +35,22 @@ class Conta {
     fun transfere(valor: Double, destino: Conta): Boolean {
         if (this.saldo > valor) {
             this.saldo -= valor
-            destino.saldo += valor
+            destino.deposita(valor)
             return true
         }
 
         return false
     }
 
+//    fun getSaldo(): Double{
+//        return this.saldo
+//    }
+//
+//    fun setSaldo(valor: Double){
+//        if(valor > 0){
+//            this.saldo = valor
+//        }
+//    }
 }
 
 fun infoConta(i: Int) {
